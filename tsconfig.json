@@ -1,0 +1,54 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+
+    /* 类型声明文件所在目录 */
+    "typeRoots": ["./node_modules/@types/", "./types", "./node_modules/"],
+
+    /* 在 typeRoots 基础上指定引入哪些包 */
+    "types": ["vite/client", "node"],
+
+    /* 允许引入 .txs 后缀的类型声明文件 */
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "preserve",
+    "jsxImportSource": "vue",
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": false,
+    "baseUrl": ".",
+    // 路径映射
+    "paths": {
+      "/@/*": ["src/*"],
+      "/#/*": ["types/*"],
+      "@/*": ["src/*"],
+      "#/*": ["types/*"],
+      "/$/*": ["mock/*"]
+    }
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "types/**/*.d.ts",
+    "types/**/*.ts",
+    "plugin/**/*.ts",
+    "plugin/**/*.d.ts",
+    "vite.config.ts",
+    "components.d.ts",
+    "env.d.ts"
+  ],
+  "exclude": ["node_modules"]
+}
