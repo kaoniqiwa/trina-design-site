@@ -10,6 +10,7 @@ import demoBox from './components/DemoBox.vue'
 import demoContainer from './components/demoContainer.vue'
 import demoSort from './components/demoSort.jsx'
 import App from './App.vue'
+import trinaDesign from '@cztrina/design-vue'
 
 const app = createApp(App)
 
@@ -27,7 +28,19 @@ router.afterEach((to, from) => {
   }
 })
 
+// console.log(trinaDesign)
+
+// 都可导出，不冲突
+app.use(trinaDesign)
 app.use(Antd)
+
+// console.log(app.config.globalProperties.$message)
+
+// 自定义组件注册成功
+console.log(app.component('TnsButton'))
+// console.log(app.component('AButton'))
+
+// app.use(Antd)
 app.use(clipboard)
 app.component('Transition', Transition)
 app.component('TransitionGroup', TransitionGroup)
