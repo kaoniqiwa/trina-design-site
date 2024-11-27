@@ -1,6 +1,7 @@
-import { createRouter, createWebHistory } from 'vue-router'
 import demoRoutes from './demoRoutes'
 import Layout from '../layouts/index.vue'
+import Iframe from '../layouts/Iframe.vue'
+import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
   {
@@ -12,6 +13,45 @@ const routes = [
         component: () => import('../views/ComponentOverview.vue'),
       },
       ...demoRoutes,
+    ],
+  },
+  {
+    path: '/iframe',
+    component: Iframe,
+    children: [
+      {
+        path: 'layout:lang(.*)',
+        meta: {
+          category: 'Components',
+          subtitle: '布局',
+          type: '布局',
+          cols: 1,
+          title: 'Layout',
+          cover: 'https://gw.alipayobjects.com/zos/alicdn/hzEndUVEx/Layout.svg',
+        },
+        props: (route) => {
+          const hash = route.hash.replace('#', '')
+          return { iframeName: hash }
+        },
+        component: () => import('/@/docs/basic/layout/demo/index.vue'),
+      },
+      {
+        path: 'float-button:lang(.*)',
+        meta: {
+          category: 'Components',
+          subtitle: '悬浮按钮',
+          type: '悬浮按钮',
+          cols: 1,
+          title: 'FloatButton',
+          cover:
+            'https://mdn.alipayobjects.com/huamei_7uahnr/afts/img/A*HS-wTIIwu0kAAAAAAAAAAAAADrJ8AQ/original',
+        },
+        props: (route) => {
+          const hash = route.hash.replace('#', '')
+          return { iframeName: hash }
+        },
+        component: () => import('/@/docs/basic/float-button/demo/index.vue'),
+      },
     ],
   },
   {
@@ -161,7 +201,26 @@ const routes = [
       { path: '', redirect: '/docs/vue/introduce/' },
     ],
   },
+  // {
+  //   path: '/theme-editor',
+  //   component: () => import('../views/theme-editor/index.vue'),
+  // },
+  // {
+  //   path: '/theme-editor-cn',
+  //   component: () => import('../views/theme-editor/index.vue'),
+  // },
+  // { path: '/debugger', component: () => import('../../debugger') },
+  { path: '/:lang(.*)', redirect: '/components/overview' },
 ]
+
+// export default createRouter({
+//   routes,
+//   scrollBehavior: (to) => {
+//     if (to.hash) {
+//       return { el: to.hash, top: 80, behavior: 'auto' }
+//     }
+//   },
+// })
 
 export default createRouter({
   history: createWebHistory(),

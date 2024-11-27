@@ -27,10 +27,6 @@ export default defineConfig({
   resolve: {
     alias: [
       {
-        find: 'vue',
-        replacement: 'vue/dist/vue.esm-bundler.js',
-      },
-      {
         find: /\/@\//,
         replacement: pathResolve('src') + '/',
       },
@@ -58,5 +54,27 @@ export default defineConfig({
     host: true,
     port: 3100,
   },
-  css: {},
+  css: {
+    preprocessorOptions: {
+      less: {
+        javascriptEnabled: true,
+        // includePaths: ["node_modules/"],
+      },
+    },
+  },
+  build: {
+    // sourcemap: true,
+  },
+  optimizeDeps: {
+    // include: [
+    //   'fetch-jsonp',
+    //   '@ant-design/icons-vue',
+    //   'lodash-es',
+    //   'dayjs',
+    //   'vue',
+    //   'vue-router',
+    //   'vue-i18n',
+    //   'async-validator',
+    // ],
+  },
 })

@@ -10,7 +10,7 @@ import demoBox from './components/DemoBox.vue'
 import demoContainer from './components/demoContainer.vue'
 import demoSort from './components/demoSort.jsx'
 import App from './App.vue'
-import trinaDesign from '@cztrina/design-vue'
+import trinaDesign from '@kaoniqiwa/design-vue'
 
 const app = createApp(App)
 
