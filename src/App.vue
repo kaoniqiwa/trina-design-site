@@ -23,6 +23,7 @@ import SiteToken from '/@/SiteToken.vue'
 import type { ThemeConfig } from 'ant-design-vue/es/config-provider/context'
 import type { Ref } from 'vue'
 
+// 008BD6
 export interface GlobalConfig {
   isMobile: Ref<boolean>
   lang: Ref<'zh-CN' | 'en-US'>
@@ -70,6 +71,9 @@ export default defineComponent({
     const themeConfig = computed(() => {
       return {
         algorithm: getAlgorithm([...new Set([theme.value, compactTheme.value])]),
+        token: {
+          colorPrimary: '#008BD6',
+        },
         ...customTheme.value,
       }
     })

@@ -50,7 +50,7 @@
           </Demo>
           <router-view v-else />
         </section>
-        <a-float-button-group trigger="click">
+        <!-- <a-float-button-group trigger="click">
           <template #icon>
             <ThemeIcon />
           </template>
@@ -84,7 +84,7 @@
               <CompactIcon />
             </template>
           </a-float-button>
-        </a-float-button-group>
+        </a-float-button-group> -->
         <!-- <div class="fixed-widgets" :style="isZhCN ? { bottom: '175px' } : {}">
           <a-dropdown placement="top">
             <template #overlay>

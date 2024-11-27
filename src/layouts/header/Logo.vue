@@ -2,21 +2,21 @@
   <h1>
     <a id="logo" :href="isZhCN ? '/index-cn' : '/index'">
       <img alt="logo" :src="logo" />
-      Ant Design Vue
+      Trina Design Vue
     </a>
   </h1>
 </template>
 
 <script lang="ts">
-import type { GlobalConfig } from '../../App.vue';
-import { GLOBAL_CONFIG } from '../../SymbolKey';
-import { defineComponent, inject } from 'vue';
-import logo from '../../assets/logo.svg';
+import type { GlobalConfig } from '../../App.vue'
+import { GLOBAL_CONFIG } from '../../SymbolKey'
+import { defineComponent, inject } from 'vue'
+import logo from '/@/assets/logo.png'
 export default defineComponent({
   setup() {
-    return { logo, isZhCN: inject<GlobalConfig>(GLOBAL_CONFIG).isZhCN.value };
+    return { logo, isZhCN: inject<GlobalConfig>(GLOBAL_CONFIG).isZhCN.value }
   },
-});
+})
 </script>
 
 <style lang="less" scoped>
