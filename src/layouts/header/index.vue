@@ -48,9 +48,9 @@
     </a-row>
     <a-modal
       title="新版发布，邀您体验"
-      :open="visibleAlertBanner"
+      :open="false"
       :footer="null"
-      @update:open="visibleAlertBanner = false"
+      @update:open="(visibleAlertBanner = false)"
     >
       <ul>
         <li class="alert-list-item">
