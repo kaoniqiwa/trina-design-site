@@ -1,15 +1,15 @@
-import type { InputProps } from 'ant-design-vue';
-import { ConfigProvider, Input, InputNumber, Select, theme } from 'ant-design-vue';
-import classNames from 'ant-design-vue/es/_util/classNames';
-import type { PropType } from 'vue';
-import { defineComponent, watchEffect, watch, computed, toRefs, ref } from 'vue';
-import { HexColorPicker, RgbaColorPicker } from '../vue-colorful';
-import tinycolor from 'tinycolor2';
-import makeStyle from './utils/makeStyle';
+import type { InputProps } from 'ant-design-vue'
+import { ConfigProvider, Input, InputNumber, Select, theme } from 'ant-design-vue'
+import classNames from 'ant-design-vue/es/_util/classNames'
+import type { PropType } from 'vue'
+import { defineComponent, watchEffect, watch, computed, toRefs, ref } from 'vue'
+import { HexColorPicker, RgbaColorPicker } from '../vue-colorful'
+import tinycolor from 'tinycolor2'
+import makeStyle from './utils/makeStyle'
 
-const { useToken } = theme;
+const { useToken } = theme
 
-const useStyle = makeStyle('ColorPanel', token => ({
+const useStyle = makeStyle('ColorPanel', (token) => ({
   '.color-panel': {
     padding: 12,
     backgroundColor: '#fff',
@@ -86,17 +86,17 @@ const useStyle = makeStyle('ColorPanel', token => ({
       },
     },
   },
-}));
+}))
 
 export type HexColorInputProps = {
-  value: string;
-  onChange?: (value: string) => void;
-  alpha?: boolean;
-};
+  value: string
+  onChange?: (value: string) => void
+  alpha?: boolean
+}
 
 const getHexValue = (value: string, alpha = false) => {
-  return alpha ? tinycolor(value).toHex8() : tinycolor(value).toHex();
-};
+  return alpha ? tinycolor(value).toHex8() : tinycolor(value).toHex()
+}
 const HexColorInput = defineComponent({
   name: 'HexColorInput',
   props: {
@@ -105,30 +105,30 @@ const HexColorInput = defineComponent({
     onChange: { type: Function as PropType<(value: string) => void> },
   },
   setup(props) {
-    const { value, alpha } = toRefs(props);
+    const { value, alpha } = toRefs(props)
 
-    const hexValue = ref<string>(value.value);
-    const focusRef = ref<boolean>(false);
+    const hexValue = ref<string>(value.value)
+    const focusRef = ref<boolean>(false)
 
-    const handleChange: InputProps['onChange'] = e => {
-      hexValue.value = e.target.value;
-      props.onChange(getHexValue(e.target.value, alpha.value));
-    };
+    const handleChange: InputProps['onChange'] = (e) => {
+      hexValue.value = e.target.value
+      props.onChange(getHexValue(e.target.value, alpha.value))
+    }
 
     const handleBlur: InputProps['onBlur'] = (e: any) => {
-      focusRef.value = false;
-      hexValue.value = getHexValue(e.target.value, alpha.value);
-    };
+      focusRef.value = false
+      hexValue.value = getHexValue(e.target.value, alpha.value)
+    }
 
     const handleFocus = () => {
-      focusRef.value = true;
-    };
+      focusRef.value = true
+    }
 
     watchEffect(() => {
       if (!focusRef.value) {
-        hexValue.value = getHexValue(value.value, alpha.value);
+        hexValue.value = getHexValue(value.value, alpha.value)
       }
-    });
+    })
 
     return () => {
       return (
@@ -145,18 +145,18 @@ const HexColorInput = defineComponent({
           />
           <div class="color-panel-mode-title">HEX{alpha.value ? '8' : ''}</div>
         </div>
-      );
-    };
+      )
+    }
   },
-});
+})
 
-type RgbaColor = tinycolor.ColorFormats.RGBA;
+type RgbaColor = tinycolor.ColorFormats.RGBA
 
 export type RgbColorInputProps = {
-  value?: RgbaColor;
-  onChange?: (value: RgbaColor) => void;
-  alpha?: boolean;
-};
+  value?: RgbaColor
+  onChange?: (value: RgbaColor) => void
+  alpha?: boolean
+}
 
 const RgbColorInput = defineComponent({
   name: 'RgbColorInput',
@@ -166,11 +166,11 @@ const RgbColorInput = defineComponent({
     alpha: { type: Boolean },
   },
   setup(props) {
-    const { value, alpha } = toRefs(props);
+    const { value, alpha } = toRefs(props)
 
-    watch(value, val => {
-      props.onChange(val);
-    });
+    watch(value, (val) => {
+      props.onChange(val)
+    })
 
     return () => {
       return (
@@ -202,33 +202,33 @@ const RgbColorInput = defineComponent({
             )}
           </ConfigProvider>
         </div>
-      );
-    };
+      )
+    }
   },
-});
+})
 
 export type ColorPanelProps = {
-  color: string;
-  onChange: (color: string) => void;
-  alpha?: boolean;
-};
+  color: string
+  onChange: (color: string) => void
+  alpha?: boolean
+}
 
-const colorModes = ['HEX', 'HEX8', 'RGB', 'RGBA'] as const;
+const colorModes = ['HEX', 'HEX8', 'RGB', 'RGBA'] as const
 
-type ColorMode = (typeof colorModes)[number];
+type ColorMode = (typeof colorModes)[number]
 
 const getColorStr = (color: any, mode: ColorMode) => {
   switch (mode) {
     case 'HEX':
-      return tinycolor(color).toHexString();
+      return tinycolor(color).toHexString()
     case 'HEX8':
-      return tinycolor(color).toHex8String();
+      return tinycolor(color).toHex8String()
     case 'RGBA':
     case 'RGB':
     default:
-      return tinycolor(color).toRgbString();
+      return tinycolor(color).toRgbString()
   }
-};
+}
 const ColorPanel = defineComponent({
   name: 'ColorPanel',
   inheritAttrs: false,
@@ -238,11 +238,11 @@ const ColorPanel = defineComponent({
     alpha: { type: Boolean },
   },
   setup(props, { attrs }) {
-    const { color, alpha } = toRefs(props);
+    const { color, alpha } = toRefs(props)
 
-    const { token } = useToken();
-    const [wrapSSR, hashId] = useStyle();
-    const colorMode = ref<ColorMode>('HEX');
+    const { token } = useToken()
+    const [wrapSSR, hashId] = useStyle()
+    const colorMode = ref<ColorMode>('HEX')
 
     const presetColors = computed(() => {
       return [
@@ -260,13 +260,13 @@ const ColorPanel = defineComponent({
         token.value.gold,
         token.value.lime,
         '#000',
-      ];
-    });
+      ]
+    })
 
     const handleColorModeChange = (value: ColorMode) => {
-      colorMode.value = value;
-      props.onChange(getColorStr(color.value, value));
-    };
+      colorMode.value = value
+      props.onChange(getColorStr(color.value, value))
+    }
     return () => {
       return wrapSSR(
         <div {...attrs} class={classNames(hashId.value, 'color-panel')}>
@@ -274,8 +274,8 @@ const ColorPanel = defineComponent({
             <HexColorPicker
               style={{ height: '160px' }}
               color={tinycolor(color.value).toHex()}
-              onChange={value => {
-                props.onChange(getColorStr(value, colorMode.value));
+              onChange={(value) => {
+                props.onChange(getColorStr(value, colorMode.value))
               }}
             />
           )}
@@ -283,8 +283,8 @@ const ColorPanel = defineComponent({
             <RgbaColorPicker
               style={{ height: '160px' }}
               color={tinycolor(color.value).toRgb()}
-              onChange={value => {
-                props.onChange(getColorStr(value, colorMode.value));
+              onChange={(value) => {
+                props.onChange(getColorStr(value, colorMode.value))
               }}
             />
           )}
@@ -297,8 +297,8 @@ const ColorPanel = defineComponent({
                 value={colorMode.value}
                 onChange={handleColorModeChange}
                 options={colorModes
-                  .filter(item => alpha.value || item === 'HEX' || item === 'RGB')
-                  .map(item => ({ value: item, key: item }))}
+                  .filter((item) => alpha.value || item === 'HEX' || item === 'RGB')
+                  .map((item) => ({ value: item, key: item }))}
                 size="small"
                 bordered={false}
                 dropdownMatchSelectWidth={false}
@@ -307,26 +307,26 @@ const ColorPanel = defineComponent({
             {colorMode.value === 'HEX' && (
               <HexColorInput
                 value={tinycolor(color.value).toHex()}
-                onChange={v => props.onChange(tinycolor(v).toHexString())}
+                onChange={(v) => props.onChange(tinycolor(v).toHexString())}
               />
             )}
             {colorMode.value === 'HEX8' && (
               <HexColorInput
                 alpha
                 value={tinycolor(color.value).toHex8()}
-                onChange={v => props.onChange(tinycolor(v).toHex8String())}
+                onChange={(v) => props.onChange(tinycolor(v).toHex8String())}
               />
             )}
             {(colorMode.value === 'RGBA' || colorMode.value === 'RGB') && (
               <RgbColorInput
                 alpha={colorMode.value === 'RGBA'}
                 value={tinycolor(color.value).toRgb()}
-                onChange={v => props.onChange(tinycolor(v).toRgbString())}
+                onChange={(v) => props.onChange(tinycolor(v).toRgbString())}
               />
             )}
           </div>
           <div class="color-panel-preset-colors">
-            {presetColors.value.map(presetColor => (
+            {presetColors.value.map((presetColor) => (
               <button
                 key={presetColor}
                 class="color-panel-preset-color-btn"
@@ -336,9 +336,9 @@ const ColorPanel = defineComponent({
             ))}
           </div>
         </div>,
-      );
-    };
+      )
+    }
   },
-});
+})
 
-export default ColorPanel;
+export default ColorPanel

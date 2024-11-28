@@ -1,4 +1,4 @@
-import { CaretRightOutlined, ExpandOutlined, QuestionCircleOutlined } from '@ant-design/icons-vue';
+import { CaretRightOutlined, ExpandOutlined, QuestionCircleOutlined } from '@ant-design/icons-vue'
 import {
   Button,
   Checkbox,
@@ -8,34 +8,34 @@ import {
   Switch,
   Tooltip,
   Typography,
-} from 'ant-design-vue';
-import type { MutableTheme, SelectedToken } from '../interface';
-import type { ThemeConfig } from 'ant-design-vue/es/config-provider/context';
-import seed from 'ant-design-vue/es/theme/themes/seed';
-import tokenMeta from 'ant-design-vue/es/version/token-meta.json';
-import classNames from 'ant-design-vue/es/_util/classNames';
+} from 'ant-design-vue'
+import type { MutableTheme, SelectedToken } from '../interface'
+import type { ThemeConfig } from 'ant-design-vue/es/config-provider/context'
+import seed from 'ant-design-vue/es/theme/themes/seed'
+import tokenMeta from 'ant-design-vue/es/version/token-meta.json'
+import classNames from 'ant-design-vue/es/_util/classNames'
 
-import type { PropType } from 'vue';
-import { toRefs, defineComponent, watchEffect, computed, watch, ref } from 'vue';
-import { debounce } from 'lodash';
+import type { PropType } from 'vue'
+import { toRefs, defineComponent, watchEffect, computed, watch, ref } from 'vue'
+import { debounce } from 'lodash'
 
-import type { ThemeCode } from '../hooks/useControlledTheme';
-import { themeMap } from '../hooks/useControlledTheme';
-import { CompactTheme, DarkTheme, Light, Pick } from '../icons';
+import type { ThemeCode } from '../hooks/useControlledTheme'
+import { themeMap } from '../hooks/useControlledTheme'
+import { CompactTheme, DarkTheme, Light, Pick } from '../icons'
 
-import { useInjectLocaleContext } from '../locale';
-import type { TokenCategory, TokenGroup } from '../meta/interface';
-import getDesignToken from '../utils/getDesignToken';
-import makeStyle from '../utils/makeStyle';
-import ColorPanel from '../ColorPanel';
-import IconSwitch from '../IconSwitch';
-import InputNumberPlus from './InputNumberPlus';
-import TokenDetail from './TokenDetail';
-import TokenPreview from './TokenPreview';
+import { useInjectLocaleContext } from '../locale'
+import type { TokenCategory, TokenGroup } from '../meta/interface'
+import getDesignToken from '../utils/getDesignToken'
+import makeStyle from '../utils/makeStyle'
+import ColorPanel from '../ColorPanel'
+import IconSwitch from '../IconSwitch'
+import InputNumberPlus from './InputNumberPlus'
+import TokenDetail from './TokenDetail'
+import TokenPreview from './TokenPreview'
 
-const { Panel } = Collapse;
+const { Panel } = Collapse
 
-const useStyle = makeStyle('ColorTokenContent', token => ({
+const useStyle = makeStyle('ColorTokenContent', (token) => ({
   '.token-panel-pro-color': {
     height: '100%',
     display: 'flex',
@@ -240,18 +240,18 @@ const useStyle = makeStyle('ColorTokenContent', token => ({
       },
     },
   },
-}));
+}))
 
 export type SeedTokenProps = {
-  theme: MutableTheme;
-  tokenName: string;
-  disabled?: boolean;
-};
+  theme: MutableTheme
+  tokenName: string
+  disabled?: boolean
+}
 
 const getSeedValue = (config: ThemeConfig, token: string) => {
   // @ts-ignore
-  return config.token?.[token] || seed[token] || getDesignToken(config)[token];
-};
+  return config.token?.[token] || seed[token] || getDesignToken(config)[token]
+}
 
 const seedRange: Record<string, { min: number; max: number }> = {
   borderRadius: {
@@ -270,7 +270,7 @@ const seedRange: Record<string, { min: number; max: number }> = {
     min: 0,
     max: 16,
   },
-};
+}
 
 const SeedTokenPreview = defineComponent({
   name: 'SeedTokenPreview',
@@ -280,12 +280,12 @@ const SeedTokenPreview = defineComponent({
     disabled: { type: Boolean },
   },
   setup(props) {
-    const { theme, tokenName, disabled } = toRefs(props);
+    const { theme, tokenName, disabled } = toRefs(props)
 
-    const tokenPath = computed(() => ['token', tokenName.value]);
-    const tokenValue = ref(getSeedValue(theme.value.config, tokenName.value));
+    const tokenPath = computed(() => ['token', tokenName.value])
+    const tokenValue = ref(getSeedValue(theme.value.config, tokenName.value))
 
-    const locale = useInjectLocaleContext();
+    const locale = useInjectLocaleContext()
 
     const debouncedOnChange = debounce((newValue: number | string) => {
       theme.value.onThemeChange?.(
@@ -297,19 +297,19 @@ const SeedTokenPreview = defineComponent({
           },
         },
         ['token', tokenName.value],
-      );
-    }, 500);
+      )
+    }, 500)
 
     const handleChange = (value: any) => {
-      tokenValue.value = value;
-      debouncedOnChange(value);
-    };
+      tokenValue.value = value
+      debouncedOnChange(value)
+    }
 
     watchEffect(() => {
-      tokenValue.value = getSeedValue(theme.value.config, tokenName.value);
-    });
+      tokenValue.value = getSeedValue(theme.value.config, tokenName.value)
+    })
 
-    const showReset = computed(() => theme.value.getCanReset?.(tokenPath.value));
+    const showReset = computed(() => theme.value.getCanReset?.(tokenPath.value))
 
     return () => {
       return (
@@ -374,18 +374,18 @@ const SeedTokenPreview = defineComponent({
             <Switch checked={tokenValue.value} onChange={handleChange} />
           )}
         </div>
-      );
-    };
+      )
+    }
   },
-});
+})
 
 export type MapTokenCollapseContentProps = {
-  mapTokens?: string[];
-  theme: MutableTheme;
-  selectedTokens?: SelectedToken;
-  onTokenSelect?: (token: string | string[], type: keyof SelectedToken) => void;
-  type?: string;
-};
+  mapTokens?: string[]
+  theme: MutableTheme
+  selectedTokens?: SelectedToken
+  onTokenSelect?: (token: string | string[], type: keyof SelectedToken) => void
+  type?: string
+}
 
 const MapTokenCollapseContent = defineComponent({
   name: 'MapTokenCollapseContent',
@@ -399,14 +399,14 @@ const MapTokenCollapseContent = defineComponent({
     type: { type: String },
   },
   setup(props) {
-    const { mapTokens, theme, selectedTokens, type } = toRefs(props);
+    const { mapTokens, theme, selectedTokens, type } = toRefs(props)
 
-    const locale = useInjectLocaleContext();
+    const locale = useInjectLocaleContext()
 
     return () => {
       return (
         <Collapse class="token-panel-pro-token-collapse-map-collapse">
-          {mapTokens.value?.map(mapToken => (
+          {mapTokens.value?.map((mapToken) => (
             <Panel
               header={
                 <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -447,9 +447,9 @@ const MapTokenCollapseContent = defineComponent({
                   </div>
                   <div
                     style={{ flex: 'none', margin: '4px' }}
-                    onClick={e => {
-                      e.stopPropagation();
-                      props.onTokenSelect(mapToken, 'map');
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      props.onTokenSelect(mapToken, 'map')
                     }}
                   >
                     <Pick
@@ -473,18 +473,18 @@ const MapTokenCollapseContent = defineComponent({
             </Panel>
           ))}
         </Collapse>
-      );
-    };
+      )
+    }
   },
-});
+})
 
 export type MapTokenCollapseProps = {
-  theme: MutableTheme;
-  group: TokenGroup<string>;
-  selectedTokens?: SelectedToken;
-  onTokenSelect?: (token: string | string[], type: keyof SelectedToken) => void;
-  groupFn?: (token: string) => string;
-};
+  theme: MutableTheme
+  group: TokenGroup<string>
+  selectedTokens?: SelectedToken
+  onTokenSelect?: (token: string | string[], type: keyof SelectedToken) => void
+  groupFn?: (token: string) => string
+}
 
 const MapTokenCollapse = defineComponent({
   name: 'MapTokenCollapse',
@@ -498,20 +498,20 @@ const MapTokenCollapse = defineComponent({
     groupFn: { type: Function as PropType<(token: string) => string> },
   },
   setup(props) {
-    const { theme, selectedTokens, groupFn, group } = toRefs(props);
+    const { theme, selectedTokens, groupFn, group } = toRefs(props)
 
-    const locale = useInjectLocaleContext();
+    const locale = useInjectLocaleContext()
 
     const groupedTokens = computed(() => {
-      const grouped: Record<string, string[]> = {};
+      const grouped: Record<string, string[]> = {}
       if (groupFn.value) {
-        group.value.mapToken?.forEach(token => {
-          const key = groupFn.value(token) ?? 'light';
-          grouped[key] = [...(grouped[key] ?? []), token];
-        });
+        group.value.mapToken?.forEach((token) => {
+          const key = groupFn.value(token) ?? 'light'
+          grouped[key] = [...(grouped[key] ?? []), token]
+        })
       }
-      return grouped;
-    });
+      return grouped
+    })
 
     return () => {
       if (groupFn.value) {
@@ -524,7 +524,7 @@ const MapTokenCollapse = defineComponent({
               <CaretRightOutlined rotate={isActive ? 450 : 360} style={{ fontSize: '12px' }} />
             )}
           >
-            {(group.value.mapTokenGroups ?? Object.keys(groupedTokens.value)).map(key => (
+            {(group.value.mapTokenGroups ?? Object.keys(groupedTokens.value)).map((key) => (
               <Panel key={key} header={(locale.value as any)[key] ?? ''}>
                 <MapTokenCollapseContent
                   mapTokens={groupedTokens.value[key]}
@@ -536,20 +536,20 @@ const MapTokenCollapse = defineComponent({
               </Panel>
             ))}
           </Collapse>
-        );
+        )
       }
 
       if (group.value.groups) {
         return (
           <Collapse
             class="token-panel-pro-grouped-map-collapse"
-            activeKey={group.value.groups.map(item => item.key)}
+            activeKey={group.value.groups.map((item) => item.key)}
             expandIconPosition="end"
             expandIcon={({ isActive }) => (
               <CaretRightOutlined rotate={isActive ? 450 : 360} style={{ fontSize: '12px' }} />
             )}
           >
-            {group.value.groups.map(item => (
+            {group.value.groups.map((item) => (
               <Panel key={item.key} header={item.name}>
                 <MapTokenCollapseContent
                   mapTokens={item.mapToken}
@@ -561,7 +561,7 @@ const MapTokenCollapse = defineComponent({
               </Panel>
             ))}
           </Collapse>
-        );
+        )
       }
 
       return (
@@ -572,37 +572,37 @@ const MapTokenCollapse = defineComponent({
           onTokenSelect={props.onTokenSelect}
           type={group.value.type}
         />
-      );
-    };
+      )
+    }
   },
-});
+})
 
 const groupMapToken = (token: string): string => {
   if (token.startsWith('colorFill')) {
-    return 'fill';
+    return 'fill'
   }
   if (token.startsWith('colorBorder') || token.startsWith('colorSplit')) {
-    return 'border';
+    return 'border'
   }
   if (token.startsWith('colorBg')) {
-    return 'background';
+    return 'background'
   }
   if (token.startsWith('colorText')) {
-    return 'text';
+    return 'text'
   }
-  return '';
-};
+  return ''
+}
 
 export type ColorTokenContentProps = {
-  category: TokenCategory<string>;
-  theme: MutableTheme;
-  selectedTokens?: SelectedToken;
-  infoFollowPrimary?: boolean;
-  activeGroup: string;
-  onTokenSelect?: (token: string | string[], type: keyof SelectedToken) => void;
-  onInfoFollowPrimaryChange?: (value: boolean) => void;
-  onActiveGroupChange: (value: string) => void;
-};
+  category: TokenCategory<string>
+  theme: MutableTheme
+  selectedTokens?: SelectedToken
+  infoFollowPrimary?: boolean
+  activeGroup: string
+  onTokenSelect?: (token: string | string[], type: keyof SelectedToken) => void
+  onInfoFollowPrimaryChange?: (value: boolean) => void
+  onActiveGroupChange: (value: string) => void
+}
 
 const TokenContent = defineComponent({
   name: 'TokenContent',
@@ -625,54 +625,54 @@ const TokenContent = defineComponent({
   },
   emits: ['update:activeGroup'],
   setup(props, { attrs, emit }) {
-    const { category, theme, selectedTokens, infoFollowPrimary, activeGroup } = toRefs(props);
+    const { category, theme, selectedTokens, infoFollowPrimary, activeGroup } = toRefs(props)
 
-    const curActiveGroup = ref('');
+    const curActiveGroup = ref('')
 
     watch(
       activeGroup,
-      val => {
-        curActiveGroup.value = val;
+      (val) => {
+        curActiveGroup.value = val
       },
       { immediate: true },
-    );
+    )
 
-    watch(curActiveGroup, val => {
-      props.onActiveGroupChange?.(val);
-      emit('update:activeGroup', val);
-    });
+    watch(curActiveGroup, (val) => {
+      props.onActiveGroupChange?.(val)
+      emit('update:activeGroup', val)
+    })
 
-    const [wrapSSR, hashId] = useStyle();
+    const [wrapSSR, hashId] = useStyle()
 
-    const grouped = ref<boolean>(true);
-    const locale = useInjectLocaleContext();
+    const grouped = ref<boolean>(true)
+    const locale = useInjectLocaleContext()
 
     const switchAlgorithm = (themeStr: 'dark' | 'compact') => () => {
-      let newAlgorithm = theme.value.config.algorithm;
+      let newAlgorithm = theme.value.config.algorithm
       if (!newAlgorithm) {
-        newAlgorithm = themeMap[themeStr];
+        newAlgorithm = themeMap[themeStr]
       } else if (Array.isArray(newAlgorithm)) {
         newAlgorithm = newAlgorithm.includes(themeMap[themeStr])
-          ? newAlgorithm.filter(item => item !== themeMap[themeStr])
-          : [...newAlgorithm, themeMap[themeStr]];
+          ? newAlgorithm.filter((item) => item !== themeMap[themeStr])
+          : [...newAlgorithm, themeMap[themeStr]]
       } else {
         newAlgorithm =
-          newAlgorithm === themeMap[themeStr] ? undefined : [newAlgorithm, themeMap[themeStr]];
+          newAlgorithm === themeMap[themeStr] ? undefined : [newAlgorithm, themeMap[themeStr]]
       }
       theme.value.onThemeChange?.({ ...theme.value.config, algorithm: newAlgorithm }, [
         'config',
         'algorithm',
-      ]);
-    };
+      ])
+    }
 
     const isLeftChecked = (str: ThemeCode) => {
       if (!theme.value.config.algorithm) {
-        return true;
+        return true
       }
       return Array.isArray(theme.value.config.algorithm)
         ? !theme.value.config.algorithm.includes(themeMap[str])
-        : theme.value.config.algorithm !== themeMap[str];
-    };
+        : theme.value.config.algorithm !== themeMap[str]
+    }
 
     return () => {
       return wrapSSR(
@@ -742,7 +742,7 @@ const TokenContent = defineComponent({
                         <div class="token-panel-pro-token-collapse-description">
                           {locale.value._lang === 'zh-CN' ? group.desc : group.descEn}
                         </div>
-                        {group.seedToken?.map(seedToken => (
+                        {group.seedToken?.map((seedToken) => (
                           <div key={seedToken} class="token-panel-pro-token-collapse-seed-block">
                             <div style={{ marginRight: 'auto' }}>
                               <div class="token-panel-pro-token-collapse-subtitle">
@@ -771,7 +771,7 @@ const TokenContent = defineComponent({
                                   <Checkbox
                                     style={{ marginLeft: '12px' }}
                                     checked={infoFollowPrimary.value}
-                                    onChange={e =>
+                                    onChange={(e) =>
                                       props.onInfoFollowPrimaryChange(e.target.checked)
                                     }
                                   >
@@ -820,7 +820,7 @@ const TokenContent = defineComponent({
                                   </label>
                                   <Switch
                                     checked={grouped.value}
-                                    onChange={v => (grouped.value = v as boolean)}
+                                    onChange={(v) => (grouped.value = v as boolean)}
                                     size="small"
                                   />
                                 </div>
@@ -842,7 +842,7 @@ const TokenContent = defineComponent({
                             type="primary"
                             style={{ borderRadius: '4px', marginBottom: '12px' }}
                             onClick={() => {
-                              curActiveGroup.value = category.value.groups[index + 1]?.key;
+                              curActiveGroup.value = category.value.groups[index + 1]?.key
                             }}
                           >
                             {locale.value.next}
@@ -850,15 +850,15 @@ const TokenContent = defineComponent({
                         )}
                       </div>
                     </Panel>
-                  );
+                  )
                 })}
               </Collapse>
             </ConfigProvider>
           </div>
         </div>,
-      );
-    };
+      )
+    }
   },
-});
+})
 
-export default TokenContent;
+export default TokenContent
