@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, provide, watch, ref } from 'vue'
+import { computed, defineComponent, provide, watch, ref, toRef, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import useMediaQuery from '/@/hooks/useMediaQuery'
@@ -20,8 +20,10 @@ import dayjs from 'dayjs'
 import 'dayjs/locale/zh-cn'
 import { theme as antdTheme } from 'ant-design-vue'
 import SiteToken from '/@/SiteToken.vue'
-import type { ThemeConfig } from 'ant-design-vue/es/config-provider/context'
+// import type { ThemeConfig } from 'ant-design-vue/es/config-provider/context'
 import type { Ref } from 'vue'
+import { TRINA_DESIGN_THEME_EDITOR_THEME } from '/@/constants/theme'
+import defaultThemeConfig from '/@/theme/conf/theme.json'
 
 // 008BD6
 export interface GlobalConfig {
@@ -33,8 +35,6 @@ export interface GlobalConfig {
 }
 
 export type ThemeName = '' | 'light' | 'dark' | 'compact'
-
-const ANT_DESIGN_VUE_V4_THEME_EDITOR_THEME = '@kaoniqiwa/trina-design-site-v4-theme-editor-theme'
 
 function isZhCN(name: string) {
   return /-cn\/?$/.test(name)
@@ -64,16 +64,13 @@ export default defineComponent({
     const colSize = useMediaQuery()
     const isMobile = computed(() => colSize.value === 'sm' || colSize.value === 'xs')
     const theme = ref<ThemeName>((localStorage.getItem('theme') as ThemeName) || 'light')
-    const customTheme = ref<ThemeConfig>({})
+    const customTheme = toRef(defaultThemeConfig)
 
     const compactTheme = ref<ThemeName>((localStorage.getItem('compactTheme') as ThemeName) || '')
 
     const themeConfig = computed(() => {
       return {
         algorithm: getAlgorithm([...new Set([theme.value, compactTheme.value])]),
-        token: {
-          colorPrimary: '#008BD6',
-        },
         ...customTheme.value,
       }
     })
@@ -104,11 +101,19 @@ export default defineComponent({
     }
 
     const getCustomTheme = () => {
-      const storedConfig = localStorage.getItem(ANT_DESIGN_VUE_V4_THEME_EDITOR_THEME)
+      const storedConfig = localStorage.getItem(TRINA_DESIGN_THEME_EDITOR_THEME)
       if (storedConfig) {
-        customTheme.value = JSON.parse(storedConfig)
+        customTheme.value = {
+          ...defaultThemeConfig,
+          ...JSON.parse(storedConfig),
+        }
+      } else {
+        customTheme.value = {
+          ...defaultThemeConfig,
+        }
       }
     }
+
     const changeCompactTheme = (t: ThemeName) => {
       compactTheme.value = t
       localStorage.setItem('compactTheme', t)
@@ -163,6 +168,10 @@ export default defineComponent({
       },
       { immediate: true },
     )
+
+    nextTick(() => {
+      getCustomTheme()
+    })
     return { globalConfig, locale, themeConfig, hashPriority }
   },
 })

@@ -64,8 +64,10 @@ import Header from '../../layouts/header/index.vue'
 import { enUS, ThemeEditor, zhCN } from '/@/components/antdv-token-previewer'
 
 import type { ThemeConfig } from 'ant-design-vue/es/config-provider/context'
+import { TRINA_DESIGN_THEME_EDITOR_THEME } from '/@/constants/theme'
+import defaultThemeConfig from '/@/theme/conf/theme.json'
 
-const ANT_DESIGN_VUE_V4_THEME_EDITOR_THEME = 'ant-design-vue-v4-theme-editor-theme'
+// console.log('defaultThemeConfig', defaultThemeConfig)
 
 function isObject(target: any) {
   return Object.prototype.toString.call(target) === '[object Object]'
@@ -93,14 +95,21 @@ export default defineComponent({
     })
 
     const getTheme = () => {
-      const storedConfig = localStorage.getItem(ANT_DESIGN_VUE_V4_THEME_EDITOR_THEME)
+      const storedConfig = localStorage.getItem(TRINA_DESIGN_THEME_EDITOR_THEME)
       if (storedConfig) {
-        theme.value = JSON.parse(storedConfig)
+        theme.value = {
+          ...defaultThemeConfig,
+          ...JSON.parse(storedConfig),
+        }
+      } else {
+        theme.value = {
+          ...defaultThemeConfig,
+        }
       }
     }
 
     const setTheme = (theme) => {
-      localStorage.setItem(ANT_DESIGN_VUE_V4_THEME_EDITOR_THEME, JSON.stringify(theme))
+      localStorage.setItem(TRINA_DESIGN_THEME_EDITOR_THEME, JSON.stringify(theme))
     }
 
     const editModelClose = () => {
@@ -144,7 +153,7 @@ export default defineComponent({
     }
 
     const handleExport = () => {
-      const file = new File([JSON.stringify(theme.value, null, 2)], `Ant Design Vue Theme.json`, {
+      const file = new File([JSON.stringify(theme.value, null, 2)], `theme.json`, {
         type: 'text/json; charset=utf-8;',
       })
       const tmpLink = document.createElement('a')
