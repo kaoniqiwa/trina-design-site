@@ -118,36 +118,7 @@ const routes = [
         meta: { enTitle: 'Custom Date Library', title: '自定义时间库', category: 'docs' },
         component: () => import('../vueDocs/replace-date.en-US.md'),
       },
-      // {
-      //   path: 'vue/migration-v2-cn',
-      //   meta: { enTitle: 'V1 to V2', title: '从 v1 到 v2', category: 'docs' },
-      //   component: () => import('../vueDocs/migration-v2.zh-CN.md'),
-      // },
-      // {
-      //   path: 'vue/migration-v2',
-      //   meta: { enTitle: 'V1 to V2', title: '从 v1 到 v2', category: 'docs' },
-      //   component: () => import('../vueDocs/migration-v2.en-US.md'),
-      // },
-      // {
-      //   path: 'vue/migration-v3-cn',
-      //   meta: { enTitle: 'V2 to V3', title: '从 v2 到 v3', category: 'docs' },
-      //   component: () => import('../vueDocs/migration-v3.zh-CN.md'),
-      // },
-      // {
-      //   path: 'vue/migration-v3',
-      //   meta: { enTitle: 'V2 to V3', title: '从 v2 到 v3', category: 'docs' },
-      //   component: () => import('../vueDocs/migration-v3.en-US.md'),
-      // },
-      // {
-      //   path: 'vue/migration-v4-cn',
-      //   meta: { enTitle: 'V3 to V4', title: '从 V3 到 V4', category: 'docs' },
-      //   component: () => import('../vueDocs/migration-v4.zh-CN.md'),
-      // },
-      // {
-      //   path: 'vue/migration-v4',
-      //   meta: { enTitle: 'V3 to V4', title: '从 V3 到 V4', category: 'docs' },
-      //   component: () => import('../vueDocs/migration-v4.en-US.md'),
-      // },
+
       {
         path: 'vue/i18n-cn',
         meta: { enTitle: 'Internationalization', title: '国际化', category: 'docs' },
@@ -168,26 +139,6 @@ const routes = [
         meta: { enTitle: 'FAQ', title: '常见问题', category: 'docs' },
         component: () => import('../vueDocs/faq.en-US.md'),
       },
-      // {
-      //   path: 'vue/download-cn',
-      //   meta: { enTitle: 'Download Design Resources', title: '下载设计资源', category: 'docs' },
-      //   component: () => import('../vueDocs/download.zh-CN.md'),
-      // },
-      // {
-      //   path: 'vue/download',
-      //   meta: { enTitle: 'Download Design Resources', title: '下载设计资源', category: 'docs' },
-      //   component: () => import('../vueDocs/download.en-US.md'),
-      // },
-      // {
-      //   path: 'vue/sponsor-cn',
-      //   meta: { enTitle: 'Sponsor', title: '支持我们', category: 'docs' },
-      //   component: () => import('../vueDocs/sponsor.zh-CN.md'),
-      // },
-      // {
-      //   path: 'vue/sponsor',
-      //   meta: { enTitle: 'Sponsor', title: '支持我们', category: 'docs' },
-      //   component: () => import('../vueDocs/sponsor.en-US.md'),
-      // },
       {
         path: 'vue/changelog-cn',
         meta: { enTitle: 'Change Log', title: '更新日志', category: 'docs' },
@@ -209,18 +160,8 @@ const routes = [
     path: '/theme-editor-cn',
     component: () => import('/@/views/theme-editor/index.vue'),
   },
-  // { path: '/debugger', component: () => import('../../debugger') },
-  { path: '/:lang(.*)', redirect: '/components/overview' },
+  { path: '/:lang(.*)', redirect: '/components/overview-cn' },
 ]
-
-// export default createRouter({
-//   routes,
-//   scrollBehavior: (to) => {
-//     if (to.hash) {
-//       return { el: to.hash, top: 80, behavior: 'auto' }
-//     }
-//   },
-// })
 
 export default createRouter({
   history: createWebHistory(),

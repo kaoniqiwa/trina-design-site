@@ -1,25 +1,5 @@
 <template>
   <header id="header" :class="headerClassName">
-    <!-- <div v-if="visibleAdblockBanner" class="adblock-banner">
-      <template v-if="isZhCN">
-        我们检测到你可能使用了 AdBlock 或 Adblock
-        Plus，它会影响到正常功能的使用（如复制、展开代码等）。
-        <br />
-        你可以将 Ant Design Vue 加入白名单，以便我们更好地提供服务。
-      </template>
-      <template v-else>
-        We have detected that you may use AdBlock or Adblock Plus, which will affect the use of
-        normal functions (such as copying, expanding code, etc.)
-        <br />
-        You can add Ant Design Vue to the whitelist so that we can provide better services.
-      </template>
-
-      <CloseOutlined class="close-icon" @click="visibleAdblockBanner = false" />
-    </div> -->
-    <!-- <div class="alert-banner">
-      Surely Form AI 助手内测开放申请 &nbsp;&nbsp;
-      <a target="_blank" href="https://form.antdv.com">立即申请</a>
-    </div> -->
     <a-row :style="{ flexFlow: 'nowrap', height: 64, position: 'relative' }">
       <a-col v-bind="colProps[0]">
         <Logo />
@@ -33,7 +13,7 @@
         />
         <Menu v-if="!isMobile" />
       </a-col>
-      <a-popover
+      <!-- <a-popover
         v-model:open="menuOpen"
         overlay-class-name="popover-menu"
         placement="bottomRight"
@@ -44,13 +24,13 @@
         <template #content>
           <Menu :is-mobile="isMobile" />
         </template>
-      </a-popover>
+      </a-popover> -->
     </a-row>
-    <a-modal
+    <!-- <a-modal
       title="新版发布，邀您体验"
       :open="false"
       :footer="null"
-      @update:open="(visibleAlertBanner = false)"
+      @update:open="visibleAlertBanner = false"
     >
       <ul>
         <li class="alert-list-item">
@@ -73,7 +53,7 @@
           <a target="_blank" href="https://store.antdv.com/pro/preview/workplace">立即体验</a>
         </li>
       </ul>
-    </a-modal>
+    </a-modal> -->
   </header>
 </template>
 <script lang="ts">

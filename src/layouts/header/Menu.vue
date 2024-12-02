@@ -4,20 +4,6 @@
     <Ecosystem />
   </template>
   <template v-else>
-    <!-- <a-select
-      key="version"
-      class="version"
-      size="small"
-      :dropdown-match-select-width="false"
-      :default-value="antdVersion"
-    >
-      <a-select-option :value="antdVersion">{{ antdVersion }}</a-select-option>
-      <a-select-option value="3.x" @click="changeVersion('3x')">3.x</a-select-option>
-      <a-select-option value="2.x" @click="changeVersion('2x')">
-        2.x (Not Recommended)
-      </a-select-option>
-      <a-select-option value="1.x" @click="changeVersion('1x')">1.x (For Vue 2)</a-select-option>
-    </a-select> -->
     <a-button
       key="lang-button"
       size="small"
@@ -26,7 +12,6 @@
     >
       {{ $t('app.header.lang') }}
     </a-button>
-    <!-- <More /> -->
     <Github />
   </template>
 </template>

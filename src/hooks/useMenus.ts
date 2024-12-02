@@ -3,7 +3,13 @@ import type { ComputedRef } from 'vue'
 import { computed, inject } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { GLOBAL_CONFIG } from '/@/SymbolKey'
-const typeOrder: any = {
+
+/**menu group 信息 */
+interface TypeOrder {
+  order: number
+  en: string
+}
+const typeOrder: Record<string, TypeOrder> = {
   组件总览: { order: -1, en: 'Overview' },
   通用: { order: 0, en: 'General' },
   布局: { order: 1, en: 'Layout' },
