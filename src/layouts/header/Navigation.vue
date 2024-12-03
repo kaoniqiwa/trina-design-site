@@ -16,11 +16,11 @@
         {{ $t('app.header.menu.components') }}
       </router-link>
     </a-menu-item>
-    <!-- <a-menu-item>
-      <router-link :to="getLocalizedPathname('/pro-components/overview/', isZhCN)">
+    <a-menu-item>
+      <router-link :to="getLocalizedPathname('/components-pro/button/', isZhCN)">
         高级组件
       </router-link>
-    </a-menu-item> -->
+    </a-menu-item>
 
     <template v-if="isMobile">
       <a-menu-item key="switch-lang" @click="$emit('langChange')">

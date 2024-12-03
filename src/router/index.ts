@@ -2,8 +2,8 @@ import demoRoutes from './demoRoutes'
 import Layout from '../layouts/index.vue'
 import Iframe from '../layouts/Iframe.vue'
 import { createRouter, createWebHistory } from 'vue-router'
-
-const routes = [
+import type { RouteRecordRaw } from 'vue-router'
+const routes: RouteRecordRaw[] = [
   {
     path: '/components',
     component: Layout,
@@ -13,6 +13,26 @@ const routes = [
         component: () => import('../views/ComponentOverview.vue'),
       },
       ...demoRoutes,
+    ],
+  },
+  {
+    path: '/components-pro',
+    component: Layout,
+    children: [
+      {
+        path: 'button:lang(-cn)?',
+        meta: {
+          category: 'Components-Pro',
+          type: '通用',
+          title: 'Button',
+          cover:
+            'https://mdn.alipayobjects.com/huamei_7uahnr/afts/img/A*BrFMQ5s7AAQAAAAAAAAAAAAADrJ8AQ/original',
+          coverDark:
+            'https://mdn.alipayobjects.com/huamei_7uahnr/afts/img/A*Lp1kTYmSsgoAAAAAAAAAAAAADrJ8AQ/original',
+          subtitle: '高级按钮',
+        },
+        component: () => import('/@/docs/pro/button/demo/index.vue'),
+      },
     ],
   },
   {
