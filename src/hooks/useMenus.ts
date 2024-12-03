@@ -32,9 +32,11 @@ const useMenus = (): {
   const globalConfig = inject<any>(GLOBAL_CONFIG)
   const menus = computed(() => {
     const path = route.path
+
     const category = path.split('/')[1]
     const pattern = /^\/iframe/
     const isZhCN = globalConfig.isZhCN.value
+    // 筛选在当前 category 下的路由,cn 和 en 路由其实是同一个路由，所以去除 -cn 路由，后续在zh-cn 下会手动加上 -cn 后缀
     const ms = routes
       .filter((r) => {
         const inCategory =
@@ -62,6 +64,7 @@ const useMenus = (): {
     return menus.value.findIndex((m) => m.path === activeMenuItem.value)
   })
   const dataSource = computed(() => {
+    // group 会被用于 a-menu-group 组件 的 title 属性
     const group = groupBy(menus.value, (m: any) => m.type || m.category)
     const keys: string[] = Object.keys(group)
     const newMenus = keys
