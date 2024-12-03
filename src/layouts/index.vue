@@ -85,24 +85,6 @@
             </template>
           </a-float-button>
         </a-float-button-group>
-        <!-- <div class="fixed-widgets" :style="isZhCN ? { bottom: '175px' } : {}">
-          <a-dropdown placement="top">
-            <template #overlay>
-              <a-menu
-                :selected-keys="[themeMode.theme.value]"
-                @click="({ key }) => themeMode.changeTheme(key)"
-              >
-                <a-menu-item key="default">{{ $t('app.theme.switch.default') }}</a-menu-item>
-                <a-menu-item key="dark">{{ $t('app.theme.switch.dark') }}</a-menu-item>
-              </a-menu>
-            </template>
-            <a-avatar class="fixed-widgets-avatar" :size="44">
-              <template #icon><ThemeIcon /></template>
-            </a-avatar>
-          </a-dropdown>
-        </div> -->
-        <!-- <PrevAndNext :menus="menus" :current-menu-index="currentMenuIndex" :is-zh-c-n="isZhCN" /> -->
-        <!-- <Footer /> -->
       </a-col>
     </a-row>
   </div>
@@ -185,23 +167,30 @@ export default defineComponent({
       },
     )
 
+    // fix: /components/ 返回 true 导致无限递归
     const isDemo = computed(() => {
-      return (
-        route.path.indexOf('/components') === 0 && route.path.indexOf('/components/overview') !== 0
-      )
+      return /\/components(?!(\/overview|\/*$))/.test(route.path)
     })
     const isTablePage = computed(() => {
       return route.path.indexOf('/components/table') === 0
     })
+    // 获取当前路由的组件
     const matchCom = computed(() => {
       return route.matched[route.matched.length - 1]?.components?.default
     })
     const isZhCN = globalConfig.isZhCN
-    const pageData = computed(() =>
-      isDemo.value
-        ? matchCom.value[isZhCN.value ? 'CN' : 'US']?.pageData
-        : (matchCom.value as any)?.pageData,
-    )
+
+    const pageData = computed(() => {
+      const data = matchCom.value
+        ? isDemo.value
+          ? Reflect.get(matchCom.value[isZhCN.value ? 'CN' : 'US'], 'pageData')
+          : Reflect.get(matchCom.value, 'pageData')
+        : void 0
+
+      // console.log('pageData', data)
+
+      return data
+    })
     const slugifyTitle = (str: string) => {
       return (
         str

@@ -1,18 +1,4 @@
 export default [
-  // {
-  //   path: 'button:lang(-cn)?',
-  //   meta: {
-  //     category: 'Components',
-  //     type: '通用',
-  //     title: 'Button',
-  //     cover:
-  //       'https://mdn.alipayobjects.com/huamei_7uahnr/afts/img/A*BrFMQ5s7AAQAAAAAAAAAAAAADrJ8AQ/original',
-  //     coverDark:
-  //       'https://mdn.alipayobjects.com/huamei_7uahnr/afts/img/A*Lp1kTYmSsgoAAAAAAAAAAAAADrJ8AQ/original',
-  //     subtitle: '按钮',
-  //   },
-  //   component: () => import('/@/docs/basic/button/demo/index.vue'),
-  // },
   {
     path: 'affix:lang(-cn)?',
     meta: {
